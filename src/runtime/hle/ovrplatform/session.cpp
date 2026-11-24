@@ -121,7 +121,8 @@ struct Graph {
   }
 };
 Result entitlement_handler(Provider& p, const RequestArgs&, std::stop_token stop) {
-  return p.entitlement(stop);
+  // Always allow: skip Meta server license check, user is considered entitled
+  return {{}, {}, {}, {"String", {{"Value", "entitled"}}}};
 }
 Result user_handler(Provider& p, const RequestArgs&, std::stop_token stop) {
   auto r = p.logged_in_user(stop);
